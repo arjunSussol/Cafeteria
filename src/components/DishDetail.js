@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardText, CardTitle, CardBody } from 'reactstrap';
 
-class Dish extends Component{
-
-    renderDish(selectedDish){
+    const renderDish = selectedDish => { // Normal function with parameter selectedDish
         if (selectedDish != null) {
             return(
                 <Card>
@@ -19,7 +17,7 @@ class Dish extends Component{
         }
     }
 
-    renderComments(comments){
+    const RenderComments = ({ comments }) => { // Functional Components with props { comments }
         if (comments != null) {
             const dateTimeFormatOption = { year: 'numeric', month: 'long', day: 'numeric' };
             const dateTimeFormat = new Intl.DateTimeFormat('en-US', dateTimeFormatOption);
@@ -46,16 +44,16 @@ class Dish extends Component{
         }
     }
 
-    render(){
-        if (this.props.dish != null) {
+    const Dish = props => { // Funtional Components
+        if (props.dish != null) {
             return(
                 <div className="container">
                     <div className="row">
                         <div className="col-12 col-md-5 mt-2">
-                            {this.renderDish(this.props.dish)}
+                            {renderDish(props.dish)}
                         </div>
                         <div className="col-12 col-md-5 mt-2">                    
-                            {this.renderComments(this.props.dish.comments)}
+                            <RenderComments comments={props.dish.comments}/>
                         </div>
                     </div>
                 </div>             
@@ -65,6 +63,5 @@ class Dish extends Component{
         }
         
     }
-}
 
 export default Dish;

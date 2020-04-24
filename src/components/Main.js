@@ -14,11 +14,16 @@ class Main extends Component {
     }
   }
 
-  onDishSelect(dishID){
+  onDishSelect = dishID => {
     this.setState({selectedDish: dishID})
     };
 
   render(){
+    let dishSelected = this.state.dishes
+    let dishFiltered = dishSelected.filter(dish => {
+      return dish.id === this.state.selectedDish
+    })
+
     return (
       <div>
         <Navbar dark color="primary">
@@ -28,8 +33,8 @@ class Main extends Component {
             </NavbarBrand>
           </div>
         </Navbar>
-        <Menu dishes={this.state.dishes} onClick={dishID => {this.onDishSelect(dishID)}}/>
-        <Dish dish={this.state.dishes.filter(dish => dish.id === this.state.selectedDish)[0]}/>               
+        <Menu dishes={dishSelected} onClick={dishID => {this.onDishSelect(dishID)}}/>
+        <Dish dish={dishFiltered[0]}/>               
       </div>
     );
   }
