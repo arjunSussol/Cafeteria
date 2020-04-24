@@ -30,7 +30,7 @@ class Dish extends Component{
                             <li>{comment.comment}</li>
                             <li>
                                 -- {comment.author},{' '}  
-                                {dateTimeFormat.format(new Date(comment.date))}
+                                {dateTimeFormat.format(new Date(Date.parse(comment.date)))}
                             </li>
                         </ul>
                     )
@@ -47,16 +47,18 @@ class Dish extends Component{
     }
 
     render(){
-        if (this.props.selectedDish != null) {
+        if (this.props.dish != null) {
             return(
-                <div className="row">
-                    <div className="col-12 col-md-5 mt-2">
-                        {this.renderDish(this.props.selectedDish)}
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 col-md-5 mt-2">
+                            {this.renderDish(this.props.dish)}
+                        </div>
+                        <div className="col-12 col-md-5 mt-2">                    
+                            {this.renderComments(this.props.dish.comments)}
+                        </div>
                     </div>
-                    <div className="col-12 col-md-5 mt-2">                    
-                        {this.renderComments(this.props.selectedDish.comments)}
-                    </div>
-                </div>
+                </div>             
             )
         } else {
             return <div/>
