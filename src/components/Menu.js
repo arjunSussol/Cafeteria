@@ -5,9 +5,9 @@ const Menu = props =>{
 
         const menu = props.dishes.map(dish => {
             return(
-                <div className="col-12 col-md-3 mt-2">
-                    <Card key={dish.id} onClick={()=>props.onClick(dish.id)}>
-                        <CardImg width="100%" object src={dish.image} alt={dish.image}/>
+                <div key={dish.id} className="col-12 col-md-3 mt-2 mb-2">
+                    <Card onClick={()=>props.onClick(dish.id)}>
+                        <CardImg width="100%" src={dish.image} alt={dish.image}/>
                         <CardImgOverlay>
                             <CardTitle>{dish.name}</CardTitle>
                         </CardImgOverlay>

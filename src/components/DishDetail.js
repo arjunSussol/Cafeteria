@@ -48,11 +48,11 @@ import { Card, CardImg, CardText, CardTitle, CardBody } from 'reactstrap';
         if (props.dish != null) {
             return(
                 <div className="container">
-                    <div className="row">
-                        <div className="col-12 col-md-5 mt-2">
+                    <div className="row  mt-2  mb-2">
+                        <div className="col-12 col-md-5">
                             {renderDish(props.dish)}
                         </div>
-                        <div className="col-12 col-md-5 mt-2">                    
+                        <div className="col-12 col-md-5">                    
                             <RenderComments comments={props.dish.comments}/>
                         </div>
                     </div>

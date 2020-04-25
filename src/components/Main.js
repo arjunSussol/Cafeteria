@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
 
 import Menu from './Menu';
 import Dish from './DishDetail';
 import { DISHES } from '../shared/dishes';
+import Header from './Header';
+import Footer from './Footer';
 
 class Main extends Component {
   constructor(props){
@@ -26,15 +27,10 @@ class Main extends Component {
 
     return (
       <div>
-        <Navbar dark color="primary">
-          <div className="container">
-            <NavbarBrand href="/">
-              Everest Cafe
-            </NavbarBrand>
-          </div>
-        </Navbar>
+        <Header/>
         <Menu dishes={dishSelected} onClick={dishID => {this.onDishSelect(dishID)}}/>
-        <Dish dish={dishFiltered[0]}/>               
+        <Dish dish={dishFiltered[0]}/>   
+        <Footer/>            
       </div>
     );
   }
