@@ -12,6 +12,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Home from './Home';
 import Contact from './Contact';
+import About from './About';
 
 class Main extends Component {
   constructor(props){
@@ -52,6 +53,7 @@ class Main extends Component {
         <Header/>
         <Switch>
           <Route path='/home' component={HomePage}/>
+          <Route exact path='/about' component={()=> <About leaders={leaderSelected}/>}/>
           <Route exact path='/menu' component={()=> <Menu dishes={dishSelected}/>}/>
           <Route path='/menu/:dishID' component={DishWithID}/>
           <Route exact path='/contact' component={Contact}/>
