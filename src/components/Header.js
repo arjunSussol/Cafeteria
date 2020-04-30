@@ -13,7 +13,7 @@ class Header extends Component {
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <Navbar expand="md" dark>
                     <div className="container">
                         <NavbarToggler onClick={this.isNavOpen} />
@@ -24,22 +24,22 @@ class Header extends Component {
                             <Nav navbar>
                                 <NavItem>
                                     <NavLink className="nav-link" to="/home">
-                                        <i class="fas fa-home fa-lg"></i>Home
+                                        <i className="fas fa-home fa-lg"></i>Home
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="nav-link" to="/about">
-                                        <i class="fas fa-info fa-lg"></i>About
+                                        <i className="fas fa-info fa-lg"></i>About
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="nav-link" to="/menu">
-                                        <i class="fas fa-list fa-lg"></i>Menu
+                                        <i className="fas fa-list fa-lg"></i>Menu
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="nav-link" to="/contact">
-                                        <i class="fas fa-address-card fa-lg"></i>Contact
+                                        <i className="fas fa-address-card fa-lg"></i>Contact
                                     </NavLink>
                                 </NavItem>
                             </Nav>                        
@@ -56,7 +56,7 @@ class Header extends Component {
                         </div>
                     </div>
                 </Jumbotron>
-            </div>
+            </React.Fragment>
         )
     }  
 }
