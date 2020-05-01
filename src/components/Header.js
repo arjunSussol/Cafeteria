@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Jumbotron } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Jumbotron, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+
+import Login from './LoginModal';
 
 class Header extends Component {
     state = {
-            isNavOpen: false
+            isNavOpen: false,
+            isModalOpen: false
         }
 
     toggleNavbar = () => {
         this.setState({isNavOpen: !this.state.isNavOpen})
-    }   
+    } 
+    
+    toggleModal = () => {
+        this.setState({isModalOpen: !this.state.isModalOpen})
+    } 
 
     render(){
         return(
@@ -44,6 +51,14 @@ class Header extends Component {
                                 </NavItem>
                             </Nav>                        
                         </Collapse>
+                        <Nav navbar className="ml-auto">
+                            <NavItem>
+                                <Button onClick={this.toggleModal}>
+                                    <span className="fas fa-sign-in-alt"></span>
+                                    Login
+                                </Button>
+                            </NavItem>
+                        </Nav>
                     </div>
                 </Navbar>
                 <Jumbotron fluid>
@@ -56,6 +71,7 @@ class Header extends Component {
                         </div>
                     </div>
                 </Jumbotron>
+                <Login isOpen={this.state.isModalOpen} onClick={this.toggleModal}/>
             </React.Fragment>
         )
     }  
