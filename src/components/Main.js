@@ -1,36 +1,30 @@
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Menu from './Menu';
 import Dish from './DishDetail';
-import { COMMENTS } from '../shared/comments';
-import { DISHES } from '../shared/dishes';
-import { LEADERS } from '../shared/leaders';
-import { PROMOTIONS } from '../shared/promotions';
-
 import Header from './Header';
 import Footer from './Footer';
 import Home from './Home';
 import Contact from './Contact';
 import About from './About';
 
-class Main extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      comments: COMMENTS,
-      dishes: DISHES,
-      leaders: LEADERS,
-      promotions: PROMOTIONS,
-    }
+const mapStateToProps = state => {
+  return{
+    comments: state.comments,
+    dishes: state.dishes,
+    leaders: state.leaders,
+    promotions: state.promotions,
   }
+}
 
-  
+class Main extends Component {
   render(){
-    let commentSelected = this.state.comments
-    let dishSelected = this.state.dishes
-    let leaderSelected = this.state.leaders
-    let promotionSelected = this.state.promotions
+    let commentSelected = this.props.comments
+    let dishSelected = this.props.dishes
+    let leaderSelected = this.props.leaders
+    let promotionSelected = this.props.promotions
 
     const HomePage = () => {
       return(
@@ -65,4 +59,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
