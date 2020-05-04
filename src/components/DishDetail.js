@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Card, CardImg, CardText, CardTitle, CardBody, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardText, CardTitle, CardBody, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import Comment from './Comment';
@@ -20,7 +20,7 @@ import Comment from './Comment';
         }
     }
 
-    const RenderComments = ({ comments }) => { // Functional Components with props { comments }
+    const RenderComments = ({ comments, addComment, dishId }) => { // Functional Components with props { comments }
         if (comments != null) {
             const dateTimeFormatOption = { year: 'numeric', month: 'long', day: 'numeric' };
             const dateTimeFormat = new Intl.DateTimeFormat('en-US', dateTimeFormatOption);
@@ -39,7 +39,8 @@ import Comment from './Comment';
                 return(
                     <div>
                         <h4>Comments</h4>
-                        {commentList}                       
+                        {commentList}  
+                        <Comment addComment={addComment} dishId={dishId} />                     
                     </div>
                 )
         } else {
@@ -49,13 +50,8 @@ import Comment from './Comment';
 
     const Dish = props => { // Funtional Components
 
-        // Hooks
-        const [modal, setModal] = useState(false);
-        const toggleModal = () => setModal(!modal);
-
         if (props.dish != null) {
             return(
-                <div>
                     <div className="container">
                         <div className="row">
                             <Breadcrumb>
@@ -72,15 +68,10 @@ import Comment from './Comment';
                                 {renderDish(props.dish)}
                             </div>
                             <div className="col-12 col-md-5">                    
-                                <RenderComments comments={props.comments}/>
-                                <Button color="secondary" outline onClick={toggleModal}><i class="fas fa-edit"></i>Submit Comment</Button>
+                                <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
                             </div>
                         </div>
-                    </div>  
-                    <div>
-                        <Comment isOpen={modal} onClick={toggleModal} />
-                    </div>
-                </div>           
+                    </div>                      
             )
         } else {
             return <div/>

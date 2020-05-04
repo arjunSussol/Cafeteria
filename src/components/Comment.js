@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, Label, Col, Button, Row } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
@@ -6,18 +6,23 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
-class Comment extends Component{
-    handleSubmit = values => {
-        alert('Current state is: '+JSON.stringify(values));
+const Comment = props => {
+        // Hooks
+    const [modal, setModal] = useState(false);
+    const toggleModal = () => setModal(!modal);
+
+    const handleSubmit = values => {
+        toggleModal();
+        props.addComment(props.dishId, values.rating, values.author, values.comment);
     }
 
-    render(){
         return(
             <div className="container">
-                <Modal isOpen={this.props.isOpen} toggle={this.props.onClick}>
-                    <ModalHeader toggle={this.props.onClick}>Login</ModalHeader>
+                <Button color="secondary" outline onClick={toggleModal}><i className="fas fa-edit"></i>Submit Comment</Button>
+                <Modal isOpen={modal} toggle={toggleModal}>
+                    <ModalHeader toggle={toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={values => this.handleSubmit(values)}>
+                        <LocalForm onSubmit={values => handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label md={2} htmlFor="rating">Rating</Label>
                                 <Col md={10}>
@@ -60,13 +65,12 @@ class Comment extends Component{
                                 </Col>
                             </Row>
                             <Button type="submit" color="primary">Submit</Button>{'  '}
-                            <Button color="secondary" onClick={this.props.onClick}>Cancel</Button>
+                            <Button color="secondary" onClick={toggleModal}>Cancel</Button>
                         </LocalForm>
                     </ModalBody>
                 </Modal>    
             </div>
         )
-    }
 }
 
 export default Comment;
