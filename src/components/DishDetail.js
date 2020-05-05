@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardTitle, CardBody, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 
 import Comment from './Comment';
+import { Loading } from './Loading';
 
     const renderDish = selectedDish => { // Normal function with parameter selectedDish
         if (selectedDish != null) {
@@ -50,7 +51,25 @@ import Comment from './Comment';
 
     const Dish = props => { // Funtional Components
 
-        if (props.dish != null) {
+        if (props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (props.dish != null) {
             return(
                     <div className="container">
                         <div className="row">

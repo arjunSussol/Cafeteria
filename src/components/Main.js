@@ -9,7 +9,7 @@ import Footer from './Footer';
 import Home from './Home';
 import Contact from './Contact';
 import About from './About';
-import { addComment } from '../redux/ActionCreators';
+import { addComment, fetchDishes } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
   return{
@@ -21,10 +21,15 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  fetchDishes: () => { dispatch(fetchDishes())}
 })
 
 class Main extends Component {
+  componentDidMount() {
+    this.props.fetchDishes();
+  }
+  
   render(){
     let commentSelected = this.props.comments
     let dishSelected = this.props.dishes
@@ -33,7 +38,9 @@ class Main extends Component {
 
     const HomePage = () => {
       return(
-        <Home dish={dishSelected.filter(dish => dish.featured)[0]}
+        <Home dish={dishSelected.dishes.filter(dish => dish.featured)[0]}
+        dishesLoading={dishSelected.isLoading}
+        dishesErrMess={dishSelected.errMess}
         leader={leaderSelected.filter(leader => leader.featured)[0]}
         promotion={promotionSelected.filter(promo => promo.featured)[0]}
         />
@@ -42,7 +49,9 @@ class Main extends Component {
 
     const DishWithID = ({ match }) => {
       return(
-        <Dish dish={dishSelected.filter(dish => dish.id === parseInt(match.params.dishID,10))[0]}
+        <Dish dish={dishSelected.dishes.filter(dish => dish.id === parseInt(match.params.dishID,10))[0]}
+        isLoading={dishSelected.isLoading}
+        errMess={dishSelected.errMess}
         comments={commentSelected.filter(comment => comment.dishId === parseInt(match.params.dishID,10))}
         addComment={this.props.addComment}/>
       )
@@ -54,7 +63,7 @@ class Main extends Component {
         <Switch>
           <Route path='/home' component={HomePage}/>
           <Route exact path='/about' component={()=> <About leaders={leaderSelected}/>}/>
-          <Route exact path='/menu' component={()=> <Menu dishes={dishSelected}/>}/>
+          <Route exact path='/menu' component={()=> <Menu dishes={dishSelected.dishes}/>}/>
           <Route path='/menu/:dishID' component={DishWithID}/>
           <Route exact path='/contact' component={Contact}/>
           <Redirect to='/home'/>
