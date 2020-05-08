@@ -10,7 +10,7 @@ import Footer from './Footer';
 import Home from './Home';
 import Contact from './Contact';
 import About from './About';
-import { addComment, fetchDishes } from '../redux/ActionCreators';
+import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
   return{
@@ -19,17 +19,21 @@ const mapStateToProps = state => {
     leaders: state.leaders,
     promotions: state.promotions,
   }
-}
+};
 
 const mapDispatchToProps = dispatch => ({
   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
   fetchDishes: () => { dispatch(fetchDishes())},
-  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
-})
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos())
+});
 
 class Main extends Component {
   componentDidMount() {
     this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
   }
   
   render(){
@@ -44,7 +48,9 @@ class Main extends Component {
         dishesLoading={dishSelected.isLoading}
         dishesErrMess={dishSelected.errMess}
         leader={leaderSelected.filter(leader => leader.featured)[0]}
-        promotion={promotionSelected.filter(promo => promo.featured)[0]}
+        promotion={promotionSelected.promotions.filter(promo => promo.featured)[0]}
+        promoLoading={promotionSelected.isLoading}
+        promoErrMess={promotionSelected.errMsg}
         />
       )
     }
@@ -54,7 +60,8 @@ class Main extends Component {
         <Dish dish={dishSelected.dishes.filter(dish => dish.id === parseInt(match.params.dishID,10))[0]}
         isLoading={dishSelected.isLoading}
         errMess={dishSelected.errMess}
-        comments={commentSelected.filter(comment => comment.dishId === parseInt(match.params.dishID,10))}
+        comments={commentSelected.comments.filter(comment => comment.dishId === parseInt(match.params.dishID,10))}
+        commentsErrMess={commentSelected.errMsg}
         addComment={this.props.addComment}/>
       )
     }

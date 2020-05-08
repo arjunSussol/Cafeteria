@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 
 import Comment from './Comment';
 import { Loading } from './Loading';
+import { baseURL } from '../shared/baseURL';
 
     const renderDish = selectedDish => { // Normal function with parameter selectedDish
         if (selectedDish != null) {
             return(
                 <Card>
-                    <CardImg src={selectedDish.image} alt={selectedDish.image}/>
+                    <CardImg src={baseURL + selectedDish.image} alt={selectedDish.image}/>
                     <CardBody>
                         <CardTitle>{selectedDish.name}</CardTitle>
                         <CardText>{selectedDish.description}</CardText>
