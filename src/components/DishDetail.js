@@ -22,7 +22,7 @@ import { baseURL } from '../shared/baseURL';
         }
     }
 
-    const RenderComments = ({ comments, addComment, dishId }) => { // Functional Components with props { comments }
+    const RenderComments = ({ comments, postComment, dishId }) => { // Functional Components with props { comments }
         if (comments != null) {
             const dateTimeFormatOption = { year: 'numeric', month: 'long', day: 'numeric' };
             const dateTimeFormat = new Intl.DateTimeFormat('en-US', dateTimeFormatOption);
@@ -42,7 +42,7 @@ import { baseURL } from '../shared/baseURL';
                     <div>
                         <h4>Comments</h4>
                         {commentList}  
-                        <Comment addComment={addComment} dishId={dishId} />                     
+                        <Comment postComment={postComment} dishId={dishId} />                     
                     </div>
                 )
         } else {
@@ -88,7 +88,7 @@ import { baseURL } from '../shared/baseURL';
                                 {renderDish(props.dish)}
                             </div>
                             <div className="col-12 col-md-5">                    
-                                <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id}/>
+                                <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.dish.id}/>
                             </div>
                         </div>
                     </div>                      
