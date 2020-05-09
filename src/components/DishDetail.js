@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardTitle, CardBody, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 import Comment from './Comment';
 import { Loading } from './Loading';
@@ -9,13 +10,19 @@ import { baseURL } from '../shared/baseURL';
     const renderDish = selectedDish => { // Normal function with parameter selectedDish
         if (selectedDish != null) {
             return(
-                <Card>
-                    <CardImg src={baseURL + selectedDish.image} alt={selectedDish.image}/>
-                    <CardBody>
-                        <CardTitle>{selectedDish.name}</CardTitle>
-                        <CardText>{selectedDish.description}</CardText>
-                    </CardBody>
-                </Card>
+                <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                    <Card>
+                        <CardImg src={baseURL + selectedDish.image} alt={selectedDish.image}/>
+                        <CardBody>
+                            <CardTitle>{selectedDish.name}</CardTitle>
+                            <CardText>{selectedDish.description}</CardText>
+                        </CardBody>
+                    </Card>
+                </FadeTransform>
             )
         } else {
             return <div></div>
@@ -26,25 +33,28 @@ import { baseURL } from '../shared/baseURL';
         if (comments != null) {
             const dateTimeFormatOption = { year: 'numeric', month: 'long', day: 'numeric' };
             const dateTimeFormat = new Intl.DateTimeFormat('en-US', dateTimeFormatOption);
-
-            const commentList = comments.map(comment => {
-                    return(
-                        <ul key={comment.id} className="list-unstyled text-left">
-                            <li>{comment.comment}</li>
-                            <li>
-                                -- {comment.author},{' '}  
-                                {dateTimeFormat.format(new Date(Date.parse(comment.date)))}
-                            </li>
-                        </ul>
-                    )
-                })
-                return(
-                    <div>
-                        <h4>Comments</h4>
-                        {commentList}  
-                        <Comment postComment={postComment} dishId={dishId} />                     
-                    </div>
-                )
+            
+            return(
+                <div>
+                    <h4>Comments</h4>
+                    <Stagger in>
+                        {comments.map(comment => {
+                            return(
+                                <Fade in  key={comment.id}>
+                                    <ul className="list-unstyled text-left">
+                                        <li>{comment.comment}</li>
+                                        <li>
+                                            -- {comment.author},{' '}  
+                                            {dateTimeFormat.format(new Date(Date.parse(comment.date)))}
+                                        </li>
+                                    </ul>
+                                </Fade>                                  
+                                )
+                            })}
+                    </Stagger>
+                    <Comment postComment={postComment} dishId={dishId} />
+                </div>
+            )
         } else {
             return <div></div>
         }
